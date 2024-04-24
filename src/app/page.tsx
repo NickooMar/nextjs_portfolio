@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { ThreeDCardDemo } from "./components/Card";
+import { DotBackgroundDemo } from "./components/Background";
+import CardThreeJS from "./components/CardThreejs";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <ThreeDCardDemo />
+    <main>
+      {/* <DotBackgroundDemo />
+      <ThreeDCardDemo /> */}
+      <CardThreeJS />
     </main>
   );
 }
