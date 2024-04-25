@@ -18,7 +18,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
-    "leva": "^0.9.35",
     "lucide-react": "^0.373.0",
     "meshline": "^3.3.0",
     "mini-svg-data-uri": "^1.4.4",

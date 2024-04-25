@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, extend, useThree, useFrame } from "@react-three/fiber";
@@ -18,7 +19,6 @@ import {
   useSphericalJoint,
 } from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
-import { useControls } from "leva";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 useGLTF.preload(
@@ -29,20 +29,17 @@ useTexture.preload(
 );
 
 export default function CardThreeJS() {
-  const { debug } = useControls({ debug: false });
   return (
-    <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
+    <Canvas
+      camera={{ position: [0, 0, 13], fov: 25 }}
+      style={{ height: "700px" }}
+      className="z-10 w-full"
+    >
       <ambientLight intensity={Math.PI} />
-      <Physics
-        debug={debug}
-        interpolate
-        gravity={[0, -40, 0]}
-        timeStep={1 / 60}
-      >
-        <Band />
+      <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
+        <Band maxSpeed={50} minSpeed={10} />
       </Physics>
       <Environment background blur={0.75}>
-        <color attach="background" args={["black"]} />
         <Lightformer
           intensity={2}
           color="white"
@@ -81,7 +78,7 @@ interface BandProps {
   minSpeed?: number;
 }
 
-function Band({ maxSpeed = 50, minSpeed = 10 }): BandProps {
+const Band: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 10 }) => {
   const band = useRef(null);
   const fixed = useRef(null);
   const j1 = useRef(null);
@@ -106,7 +103,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }): BandProps {
   const texture = useTexture(
     "https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/SOT1hmCesOHxEYxL7vkoZ/c57b29c85912047c414311723320c16b/band.jpg"
   );
+
   const { width, height } = useThree((state) => state.size);
+
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -243,4 +242,4 @@ function Band({ maxSpeed = 50, minSpeed = 10 }): BandProps {
       </mesh>
     </>
   );
-}
+};
